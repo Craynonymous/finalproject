@@ -11,43 +11,42 @@ public class Block extends Item {
     private int yPos;
     private boolean isHit;
     private ImageView view;
-    private BlockType blockType;
+    private BlockType blockType;//todo assign each number of type to the correct blocktype
     private int imageId;
-
-    public Block(int id, Activity _activity){
+    private Image image;
+    public Block(int id, Activity _activity,int type){
         this.activity = _activity;
         imageId = id;
         blockType = new BlockType(imageId, this.activity);
-        view = this.activity.findViewById(imageId);
-        xPos = (int)view.getX();
-        yPos = (int)view.getY();
+        image = new Image(id, this.activity);
+        xPos = (int)image.getImageView().getX();
+        yPos = (int)image.getImageView().getY();
         super.setup(id, _activity);
     }
+    public boolean isHit(){
+        return isHit == true;
+    }
     void update(){
-        blockType = new BlockType(imageId, this.activity);
-        view = this.activity.findViewById(imageId);
-        xPos = (int)view.getX();
-        yPos = (int)view.getY();
+        image = new Image(imageId, this.activity);
+        xPos = (int)image.getImageView().getX();
+        yPos = (int)image.getImageView().getY();
     }
     void hit() {
-        if (FullscreenActivity.isGoingUp()) {
+        //if (FullscreenActivity.isGoingUp()) {
             isHit=true;
-            view.setVisibility(ImageView.GONE);
-        }
-        else{
-            imageId = imageId;
+            image.getImageView().setVisibility(ImageView.GONE);
+        //}
+        //else{
+        //    imageId = imageId;
             //player.hit
-        }
+        //}
+    }   public int getPosX(){
+        return xPos;
+    }public int getPosY(){
+        return yPos;
     }
-
     public Image getImage(){
         return blockType.getImage();
     }
 
-    int getPosX(){
-        return xPos;
-    }
-    int getPosY(){
-        return yPos;
-    }
 }
